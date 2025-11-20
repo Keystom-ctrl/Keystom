@@ -42,42 +42,81 @@
 <section id="products" class="py-20 max-w-6xl mx-auto px-4">
   <h2 class="text-3xl font-bold text-center mb-12">Our Keychains</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-    <div class="bg-white rounded-lg p-4 text-center product-card">
-      <img src="https://via.placeholder.com/150" alt="Keychain" class="mx-auto mb-4 rounded shadow-sm">
+
+    <!-- PRODUCT 1 -->
+    <div class="bg-white rounded-lg p-4 text-center product-card"
+         data-name="Toyota Supra MK4"
+         data-price="17.99"
+         data-image="https://via.placeholder.com/150"
+         data-colors='["Red","Blue","Black"]'>
+      <img src="https://via.placeholder.com/150" class="mx-auto mb-4 rounded shadow-sm">
       <h3 class="font-bold mb-2">Toyota Supra MK4</h3>
-      <p class="text-gray-600 mb-4" data-price="17.99">17.99$</p>
+      <p class="text-gray-600 mb-4">17.99$</p>
       <button class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition add-to-cart w-full">Add to Cart</button>
     </div>
-    <div class="bg-white rounded-lg p-4 text-center product-card">
-      <img src="https://via.placeholder.com/150" alt="Keychain" class="mx-auto mb-4 rounded shadow-sm">
+
+    <!-- PRODUCT 2 -->
+    <div class="bg-white rounded-lg p-4 text-center product-card"
+         data-name="Nissan Skyline R34"
+         data-price="17.99"
+         data-image="https://via.placeholder.com/150"
+         data-colors='["Purple","White","Black"]'>
+      <img src="https://via.placeholder.com/150" class="mx-auto mb-4 rounded shadow-sm">
       <h3 class="font-bold mb-2">Nissan Skyline R34</h3>
-      <p class="text-gray-600 mb-4" data-price="17.99">17.99$</p>
+      <p class="text-gray-600 mb-4">17.99$</p>
       <button class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition add-to-cart w-full">Add to Cart</button>
     </div>
-    <div class="bg-white rounded-lg p-4 text-center product-card">
-      <img src="https://via.placeholder.com/150" alt="Keychain" class="mx-auto mb-4 rounded shadow-sm">
+
+    <!-- PRODUCT 3 -->
+    <div class="bg-white rounded-lg p-4 text-center product-card"
+         data-name="BMW M4"
+         data-price="17.99"
+         data-image="https://via.placeholder.com/150"
+         data-colors='["Yellow","Black","Green"]'>
+      <img src="https://via.placeholder.com/150" class="mx-auto mb-4 rounded shadow-sm">
       <h3 class="font-bold mb-2">BMW M4</h3>
-      <p class="text-gray-600 mb-4" data-price="11.99">17.99$</p>
+      <p class="text-gray-600 mb-4">17.99$</p>
       <button class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition add-to-cart w-full">Add to Cart</button>
     </div>
-    <div class="bg-white rounded-lg p-4 text-center product-card">
-      <img src="https://via.placeholder.com/150" alt="Keychain" class="mx-auto mb-4 rounded shadow-sm">
+
+    <!-- PRODUCT 4 -->
+    <div class="bg-white rounded-lg p-4 text-center product-card"
+         data-name="MazdaSpeed3 1st Gen"
+         data-price="17.99"
+         data-image="https://via.placeholder.com/150"
+         data-colors='["Red","Gray","Black"]'>
+      <img src="https://via.placeholder.com/150" class="mx-auto mb-4 rounded shadow-sm">
       <h3 class="font-bold mb-2">MazdaSpeed3 1st Gen</h3>
-      <p class="text-gray-600 mb-4" data-price="17.99">17.99$</p>
+      <p class="text-gray-600 mb-4">17.99$</p>
       <button class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition add-to-cart w-full">Add to Cart</button>
     </div>
+
   </div>
 </section>
 
-<img src="images/red-keychain.png" alt="Red Keychain">
+<!-- PRODUCT POPUP -->
+<div id="product-popup" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+  <div class="bg-white p-6 rounded-lg max-w-md w-full relative">
+    <button id="close-popup" class="absolute top-2 right-3 text-2xl">&times;</button>
+    <img id="popup-image" class="mx-auto mb-4 rounded shadow-sm w-48">
+    <h3 id="popup-name" class="text-2xl font-bold text-center mb-2"></h3>
+    <p class="text-center text-lg mb-4">$<span id="popup-price"></span></p>
 
-  
+    <label class="font-semibold">Select Color:</label>
+    <select id="popup-color" class="w-full border rounded px-3 py-2 mb-4"></select>
+
+    <button id="popup-add-cart" class="w-full bg-black text-white py-3 rounded hover:bg-gray-800 transition">
+      Add to Cart
+    </button>
+  </div>
+</div>
+
 <!-- Floating Cart Button -->
 <button id="cart-button" class="fixed bottom-5 right-5 bg-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-green-700 transition z-50">
   Cart (<span id="cart-count">0</span>)
 </button>
 
-<!-- Sliding Cart Sidebar -->
+<!-- Cart Sidebar -->
 <div id="cart-sidebar" class="fixed top-0 right-[-100%] h-full w-80 bg-white shadow-xl z-50 flex flex-col">
   <div class="flex justify-between items-center p-4 border-b">
     <h2 class="text-2xl font-bold">Your Cart</h2>
@@ -90,36 +129,6 @@
   </div>
 </div>
 
-<!-- About / Privacy / Terms / Contact -->
-<section id="about" class="py-20 max-w-4xl mx-auto px-4 text-center">
-  <h2 class="text-3xl font-bold mb-6">About Keystom</h2>
-  <p class="text-gray-700 text-lg">Keystom creates high-quality fabric keychains for car enthusiasts. Stylish, durable, and unique.</p>
-</section>
-
-<section id="privacy" class="py-20 max-w-4xl mx-auto px-4 text-center bg-gray-100">
-  <h2 class="text-3xl font-bold mb-6">Privacy Policy</h2>
-  <p class="text-gray-700 mb-4">We respect your privacy and only collect necessary information for orders and inquiries.</p>
-</section>
-
-<section id="terms" class="py-20 max-w-4xl mx-auto px-4 text-center">
-  <h2 class="text-3xl font-bold mb-6">Terms of Service</h2>
-  <p class="text-gray-700 mb-4">By using Keystom, you agree to our terms. Prices are in CAD (You can switch to United States website for USD).  Returns subject to approval.</p>
-</section>
-
-<section id="contact" class="py-20 max-w-4xl mx-auto px-4 text-center">
-  <h2 class="text-3xl font-bold mb-8">Contact Us</h2>
-  <form class="grid grid-cols-1 gap-6">
-    <input type="text" placeholder="Your Name" class="border rounded px-4 py-2 w-full">
-    <input type="email" placeholder="Your Email" class="border rounded px-4 py-2 w-full">
-    <textarea placeholder="Your Message" class="border rounded px-4 py-2 w-full"></textarea>
-    <button type="submit" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition">Send Message</button>
-  </form>
-</section>
-
-<footer class="bg-gray-800 text-white py-6 text-center">
-  &copy; 2025 Keystom. All rights reserved. | <a href="#privacy" class="underline">Privacy</a> | <a href="#terms" class="underline">Terms</a>
-</footer>
-
 <!-- JS -->
 <script>
 const cart = [];
@@ -131,10 +140,66 @@ const cartSidebar = document.getElementById('cart-sidebar');
 const closeCart = document.getElementById('close-cart');
 const checkoutButton = document.getElementById('checkout-button');
 
+// --- PRODUCT POPUP ELEMENTS ---
+const popup = document.getElementById("product-popup");
+const popupImage = document.getElementById("popup-image");
+const popupName = document.getElementById("popup-name");
+const popupPrice = document.getElementById("popup-price");
+const popupColor = document.getElementById("popup-color");
+const popupAddCart = document.getElementById("popup-add-cart");
+const closePopup = document.getElementById("close-popup");
+
+let selectedProduct = null;
+
+// Open product popup
+document.querySelectorAll(".product-card").forEach(card => {
+  card.addEventListener("click", e => {
+    if (e.target.classList.contains("add-to-cart")) return;
+
+    selectedProduct = {
+      name: card.dataset.name,
+      price: parseFloat(card.dataset.price),
+      image: card.dataset.image,
+      colors: JSON.parse(card.dataset.colors)
+    };
+
+    popupImage.src = selectedProduct.image;
+    popupName.textContent = selectedProduct.name;
+    popupPrice.textContent = selectedProduct.price.toFixed(2);
+
+    popupColor.innerHTML = "";
+    selectedProduct.colors.forEach(c => {
+      let opt = document.createElement("option");
+      opt.value = c;
+      opt.textContent = c;
+      popupColor.appendChild(opt);
+    });
+
+    popup.classList.remove("hidden");
+    popup.classList.add("flex");
+  });
+});
+
+// Close popup
+closePopup.addEventListener("click", () => popup.classList.add("hidden"));
+
+// Add to cart from popup
+popupAddCart.addEventListener("click", () => {
+  cart.push({
+    name: selectedProduct.name + " (" + popupColor.value + ")",
+    price: selectedProduct.price
+  });
+  updateCartUI();
+  popup.classList.add("hidden");
+  cartSidebar.style.right = "0";
+});
+
+// Cart UI
 function updateCartUI() {
   cartCount.textContent = cart.length;
   cartItems.innerHTML = '';
   let total = 0;
+
   cart.forEach((item, index) => {
     const li = document.createElement('li');
     li.className = "flex justify-between items-center";
@@ -142,43 +207,43 @@ function updateCartUI() {
     cartItems.appendChild(li);
     total += item.price;
   });
+
   cartTotal.textContent = total.toFixed(2);
 }
 
 function removeItem(index) {
-  cart.splice(index,1);
+  cart.splice(index, 1);
   updateCartUI();
 }
-
-document.querySelectorAll('.add-to-cart').forEach(button => {
-  button.addEventListener('click', (e) => {
-    const card = e.target.closest('div');
-    const name = card.querySelector('h3').textContent;
-    const price = parseFloat(card.querySelector('[data-price]').dataset.price);
-    cart.push({name, price});
-    updateCartUI();
-    cartSidebar.style.right = '0'; // open sidebar when adding
-  });
-});
 
 cartButton.addEventListener('click', () => cartSidebar.style.right = '0');
 closeCart.addEventListener('click', () => cartSidebar.style.right = '-100%');
 
 // Stripe
-const stripe = Stripe('YOUR_PUBLISHABLE_KEY'); // replace with your key
+const stripe = Stripe('YOUR_PUBLISHABLE_KEY');
+
 checkoutButton.addEventListener('click', async () => {
-  if(cart.length===0){alert("Your cart is empty!");return;}
-  const line_items = cart.map(item=>({
-    price_data:{currency:'usd', product_data:{name:item.name}, unit_amount:Math.round(item.price*100)},
-    quantity:1
+  if(cart.length === 0){ alert("Your cart is empty!"); return; }
+
+  const line_items = cart.map(item => ({
+    price_data: {
+      currency:'usd',
+      product_data:{ name:item.name },
+      unit_amount: Math.round(item.price * 100)
+    },
+    quantity: 1
   }));
-  const response = await fetch('/create-checkout-session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({line_items})});
+
+  const response = await fetch('/create-checkout-session', {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json' },
+    body:JSON.stringify({ line_items })
+  });
+
   const session = await response.json();
-  stripe.redirectToCheckout({sessionId: session.id});
+  stripe.redirectToCheckout({ sessionId: session.id });
 });
 </script>
 
 </body>
 </html>
-
-<a href="us.html">Switch to U.S. Store</a>
