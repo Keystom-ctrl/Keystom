@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        img { width: 250px; border-radius: 10px; }
+        .color-btn {
+            padding: 8px 15px;
+            margin: 5px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .color-btn.active {
+            background: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 id="productName"></h1>
+
+    <img id="productImage" src="" alt="Product image">
+
+    <h2 id="productPrice"></h2>
+
+    <p id="productDescription"></p>
+
+    <h3>Choose a color:</h3>
+    <div id="colorOptions"></div>
+
+    <br><br>
+    <a href="index.html">← Back to shop</a>
+
+    <script src="products.js"></script>
+
+    <script>
+        function getParam(name) {
+            return new URLSearchParams(window.location.search).get(name);
+        }
+
+        const productId = getParam("id");
+        const product = PRODUCTS[productId];
+
+        if (!product) {
+            document.body.innerHTML = "<h1>Product not found.</h1>";
+        } else {
+            document.getElementById("productName").innerText = product.name;
+            document.getElementById("productPrice").innerText = "$" + product.price.toFixed(2);
+            document.getElementById("productDescription").innerText = product.description;
+
+            // Default color
+            let selectedColor = product.colors[0];
+            document.getElementById("productImage").src = product.images[selectedColor];
+
+            // Create color buttons
+            product.colors.forEach(color => {
+                const btn = document.createElement("button");
+                btn.className = "color-btn";
+                btn.innerText = color.toUpperCase();
+
+                if (color === selectedColor) btn.classList.add("active");
+
+                btn.onclick = () => {
+                    selectedColor = color;
+                    document.getElementById("productImage").src = product.images[color];
+
+                    // Update active class
+                    document.querySelectorAll(".color-btn").forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                };
+
+                document.getElementById("colorOptions").appendChild(btn);
+            });
+        }
+    </script>
+
+</body>
+</html>
