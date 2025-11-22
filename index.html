@@ -177,6 +177,43 @@ checkoutButton.addEventListener('click', async () => {
   const session = await response.json();
   stripe.redirectToCheckout({sessionId: session.id});
 });
+
+const cartButton = document.getElementById('cart-button');
+const cartSidebar = document.getElementById('cart-sidebar');
+const closeCart = document.getElementById('close-cart');
+const cartItems = document.getElementById('cart-items');
+const cartTotal = document.getElementById('cart-total');
+
+function updateCartUI() {
+  cartCount.textContent = cart.length;
+  cartItems.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, index) => {
+    const li = document.createElement('li');
+    li.className = "flex justify-between items-center";
+    li.innerHTML = `${item.name} - $${item.price.toFixed(2)} <button class="text-red-500 ml-2" onclick="removeItem(${index})">✖</button>`;
+    cartItems.appendChild(li);
+    total += item.price;
+  });
+  cartTotal.textContent = total.toFixed(2);
+}
+
+function removeItem(index) {
+  cart.splice(index,1);
+  updateCartUI();
+}
+
+cartButton.addEventListener('click', () => {
+  cartSidebar.style.right = '0';
+});
+
+closeCart.addEventListener('click', () => {
+  cartSidebar.style.right = '-100%';
+});
+
+// Keep your add-to-cart and Stripe checkout code the same
+
+  
 </script>
 </body>
 </html>
