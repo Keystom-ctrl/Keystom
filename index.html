@@ -8,15 +8,11 @@
 <script src="https://js.stripe.com/v3/"></script>
 <style>
   html { scroll-behavior: smooth; }
-  body { scroll-padding-top: 70px; } /* offset for sticky navbar */
+  body { scroll-padding-top: 70px; }
   #navbar { position: sticky; top: 0; z-index: 50; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
   .product-card { transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
   .product-card:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
-  .modal { display: none; }
-  .modal.active { display: flex; }
-  /* Floating cart animation */
-  #cart-button { transition: transform 0.3s, opacity 0.3s; }
-  #cart-button.hidden { transform: translateY(100px); opacity: 0; }
+  #cart-sidebar { transition: right 0.3s; }
 </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans relative">
@@ -46,53 +42,52 @@
 <section id="products" class="py-20 max-w-6xl mx-auto px-4">
   <h2 class="text-3xl font-bold text-center mb-12">Our Keychains</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-    <!-- Example product -->
     <div class="bg-white rounded-lg p-4 text-center product-card">
-      <img src="https://via.placeholder.com/150" alt="Keychain A" class="mx-auto mb-4 rounded shadow-sm">
-      <h3 class="font-bold mb-2">Keychain Model A</h3>
+      <img src="https://via.placeholder.com/150" alt="Keychain" class="mx-auto mb-4 rounded shadow-sm">
+      <h3 class="font-bold mb-2">Toyota Supra MK4</h3>
       <p class="text-gray-600 mb-4" data-price="12.99">$12.99</p>
       <button class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition add-to-cart w-full">Add to Cart</button>
     </div>
     <div class="bg-white rounded-lg p-4 text-center product-card">
-      <img src="https://via.placeholder.com/150" alt="Keychain B" class="mx-auto mb-4 rounded shadow-sm">
-      <h3 class="font-bold mb-2">Keychain Model B</h3>
-      <p class="text-gray-600 mb-4" data-price="14.99">$14.99</p>
+      <img src="https://via.placeholder.com/150" alt="Keychain" class="mx-auto mb-4 rounded shadow-sm">
+      <h3 class="font-bold mb-2">Nissan Skyline R34</h3>
+      <p class="text-gray-600 mb-4" data-price="17.99">17.99$</p>
       <button class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition add-to-cart w-full">Add to Cart</button>
     </div>
     <div class="bg-white rounded-lg p-4 text-center product-card">
-      <img src="https://via.placeholder.com/150" alt="Keychain C" class="mx-auto mb-4 rounded shadow-sm">
-      <h3 class="font-bold mb-2">Keychain Model C</h3>
-      <p class="text-gray-600 mb-4" data-price="11.99">$11.99</p>
+      <img src="https://via.placeholder.com/150" alt="Keychain" class="mx-auto mb-4 rounded shadow-sm">
+      <h3 class="font-bold mb-2">BMW M4 Comp</h3>
+      <p class="text-gray-600 mb-4" data-price="17.99">17.99$</p>
       <button class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition add-to-cart w-full">Add to Cart</button>
     </div>
     <div class="bg-white rounded-lg p-4 text-center product-card">
-      <img src="https://via.placeholder.com/150" alt="Keychain D" class="mx-auto mb-4 rounded shadow-sm">
-      <h3 class="font-bold mb-2">Keychain Model D</h3>
-      <p class="text-gray-600 mb-4" data-price="13.99">$13.99</p>
+      <img src="https://via.placeholder.com/150" alt="Keychain" class="mx-auto mb-4 rounded shadow-sm">
+      <h3 class="font-bold mb-2">Mazdaspeed3 1st Gen</h3>
+      <p class="text-gray-600 mb-4" data-price="17.99">17.99$</p>
       <button class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition add-to-cart w-full">Add to Cart</button>
     </div>
   </div>
 </section>
 
 <!-- Floating Cart Button -->
-<button id="cart-button" class="fixed bottom-5 right-5 bg-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-green-700 transition">
+<button id="cart-button" class="fixed bottom-5 right-5 bg-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-green-700 transition z-50">
   Cart (<span id="cart-count">0</span>)
 </button>
 
-<!-- Cart Modal -->
-<div id="cart-modal" class="modal fixed inset-0 bg-black bg-opacity-50 justify-center items-center z-50">
-  <div class="bg-white rounded-lg w-96 p-6 relative">
-    <h2 class="text-2xl font-bold mb-4">Your Cart</h2>
-    <ul id="cart-items" class="mb-4"></ul>
+<!-- Sliding Cart Sidebar -->
+<div id="cart-sidebar" class="fixed top-0 right-[-100%] h-full w-80 bg-white shadow-xl z-50 flex flex-col">
+  <div class="flex justify-between items-center p-4 border-b">
+    <h2 class="text-2xl font-bold">Your Cart</h2>
+    <button id="close-cart" class="text-gray-500 hover:text-gray-800 text-2xl">✖</button>
+  </div>
+  <ul id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-2"></ul>
+  <div class="p-4 border-t">
     <p class="font-bold mb-4">Total: $<span id="cart-total">0.00</span></p>
-    <button id="close-cart" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800">✖</button>
-    <button id="checkout-button" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition w-full">
-      Checkout
-    </button>
+    <button id="checkout-button" class="w-full bg-green-600 text-white py-3 rounded hover:bg-green-700 transition">Checkout</button>
   </div>
 </div>
 
-<!-- About / Privacy / Terms / Contact Sections -->
+<!-- About / Privacy / Terms / Contact -->
 <section id="about" class="py-20 max-w-4xl mx-auto px-4 text-center">
   <h2 class="text-3xl font-bold mb-6">About Keystom</h2>
   <p class="text-gray-700 text-lg">Keystom creates high-quality fabric keychains for car enthusiasts. Stylish, durable, and unique.</p>
@@ -122,67 +117,16 @@
   &copy; 2025 Keystom. All rights reserved. | <a href="#privacy" class="underline">Privacy</a> | <a href="#terms" class="underline">Terms</a>
 </footer>
 
-<!-- Cart & Stripe JS -->
+<!-- JS -->
 <script>
 const cart = [];
 const cartCount = document.getElementById('cart-count');
 const cartItems = document.getElementById('cart-items');
 const cartTotal = document.getElementById('cart-total');
-const cartModal = document.getElementById('cart-modal');
-const cartButton = document.getElementById('cart-button');
-const closeCart = document.getElementById('close-cart');
-const checkoutButton = document.getElementById('checkout-button');
-
-function updateCartUI() {
-  cartCount.textContent = cart.length;
-  cartItems.innerHTML = '';
-  let total = 0;
-  cart.forEach((item, index) => {
-    const li = document.createElement('li');
-    li.className = "flex justify-between mb-2";
-    li.innerHTML = `${item.name} - $${item.price.toFixed(2)} <button class="text-red-500" onclick="removeItem(${index})">✖</button>`;
-    cartItems.appendChild(li);
-    total += item.price;
-  });
-  cartTotal.textContent = total.toFixed(2);
-}
-
-function removeItem(index) {
-  cart.splice(index,1);
-  updateCartUI();
-}
-
-document.querySelectorAll('.add-to-cart').forEach(button => {
-  button.addEventListener('click', (e) => {
-    const card = e.target.closest('div');
-    const name = card.querySelector('h3').textContent;
-    const price = parseFloat(card.querySelector('[data-price]').dataset.price);
-    cart.push({name, price});
-    updateCartUI();
-  });
-});
-
-cartButton.addEventListener('click', () => cartModal.classList.add('active'));
-closeCart.addEventListener('click', () => cartModal.classList.remove('active'));
-
-// Stripe
-const stripe = Stripe('YOUR_PUBLISHABLE_KEY'); // Replace with your key
-checkoutButton.addEventListener('click', async () => {
-  if(cart.length===0){alert("Your cart is empty!");return;}
-  const line_items = cart.map(item=>({
-    price_data:{currency:'usd', product_data:{name:item.name}, unit_amount:Math.round(item.price*100)},
-    quantity:1
-  }));
-  const response = await fetch('/create-checkout-session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({line_items})});
-  const session = await response.json();
-  stripe.redirectToCheckout({sessionId: session.id});
-});
-
 const cartButton = document.getElementById('cart-button');
 const cartSidebar = document.getElementById('cart-sidebar');
 const closeCart = document.getElementById('close-cart');
-const cartItems = document.getElementById('cart-items');
-const cartTotal = document.getElementById('cart-total');
+const checkoutButton = document.getElementById('checkout-button');
 
 function updateCartUI() {
   cartCount.textContent = cart.length;
@@ -203,17 +147,33 @@ function removeItem(index) {
   updateCartUI();
 }
 
-cartButton.addEventListener('click', () => {
-  cartSidebar.style.right = '0';
+document.querySelectorAll('.add-to-cart').forEach(button => {
+  button.addEventListener('click', (e) => {
+    const card = e.target.closest('div');
+    const name = card.querySelector('h3').textContent;
+    const price = parseFloat(card.querySelector('[data-price]').dataset.price);
+    cart.push({name, price});
+    updateCartUI();
+    cartSidebar.style.right = '0'; // open sidebar when adding
+  });
 });
 
-closeCart.addEventListener('click', () => {
-  cartSidebar.style.right = '-100%';
+cartButton.addEventListener('click', () => cartSidebar.style.right = '0');
+closeCart.addEventListener('click', () => cartSidebar.style.right = '-100%');
+
+// Stripe
+const stripe = Stripe('YOUR_PUBLISHABLE_KEY'); // replace with your key
+checkoutButton.addEventListener('click', async () => {
+  if(cart.length===0){alert("Your cart is empty!");return;}
+  const line_items = cart.map(item=>({
+    price_data:{currency:'usd', product_data:{name:item.name}, unit_amount:Math.round(item.price*100)},
+    quantity:1
+  }));
+  const response = await fetch('/create-checkout-session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({line_items})});
+  const session = await response.json();
+  stripe.redirectToCheckout({sessionId: session.id});
 });
-
-// Keep your add-to-cart and Stripe checkout code the same
-
-  
 </script>
+
 </body>
 </html>
