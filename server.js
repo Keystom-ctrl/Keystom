@@ -16,8 +16,8 @@ app.post("/create-checkout-session", async (req, res) => {
       mode: "payment",
       payment_method_types: ["card"],
       line_items: line_items,
-      success_url: "https://YOURDOMAIN.com/success.html",
-      cancel_url: "https://YOURDOMAIN.com/cancel.html"
+      success_url: "https://https://keystom-ctrl.github.io/Keystom//success.html",
+      cancel_url: "https://https://keystom-ctrl.github.io/Keystom//cancel.html"
     });
 
     res.send({ id: session.id });
